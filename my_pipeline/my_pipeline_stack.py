@@ -8,6 +8,15 @@ from constructs import Construct
 import aws_cdk as cdk
 from constructs import Construct
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+from aws_cdk import (
+    Stack,
+    SecretValue,
+    Environment,
+    App
+)
+from constructs import Construct
+from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+from aws_cdk.aws_codepipeline_actions import GitHubTrigger
 
 
 class MyPipelineStack(cdk.Stack):
@@ -19,7 +28,9 @@ class MyPipelineStack(cdk.Stack):
                                 pipeline_name="MyPipeline",
                                 synth=ShellStep("Synth",
                                                 input=CodePipelineSource.git_hub(
-                                                    "OWNER/REPO", "main"),
+                                                    "caseywhorton/my-pipeline", "main",
+                                                    authentication=SecretValue.secrets_manager("github-token", json_field="token"),
+                                                    trigger=GitHubTrigger.WEBHOOK),
                                                 commands=["npm install -g aws-cdk",
                                                           "python -m pip install -r requirements.txt",
                                                           "cdk synth"]
