@@ -17,6 +17,7 @@ from aws_cdk import (
 from constructs import Construct
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 from aws_cdk.aws_codepipeline_actions import GitHubTrigger
+from aws_cdk.aws_codedeploy import codedeploy
 from my_pipeline.my_pipeline_app_stage import MyPipelineAppStage
 
 
@@ -30,13 +31,16 @@ class MyPipelineStack(cdk.Stack):
                                 synth=ShellStep("Synth",
                                                 input=CodePipelineSource.git_hub(
                                                     "caseywhorton/my-pipeline", "main",
-                                                    authentication=SecretValue.secrets_manager("github-token", json_field="token"),
+                                                    authentication=SecretValue.secrets_manager(
+                                                        "github-token", json_field="token"),
                                                     trigger=GitHubTrigger.WEBHOOK),
                                                 commands=["npm install -g aws-cdk",
                                                           "python -m pip install -r requirements.txt",
-                                                          "python pytest",
                                                           "cdk synth"]
                                                 )
                                 )
-        #pipeline.add_stage(MyPipelineAppStage(self, "test",
+        application = codedeploy.LambdaApplication(self, "CodeDeployApplication",
+                                                   application_name="MyApplication"
+                                                   )
+        # pipeline.add_stage(MyPipelineAppStage(self, "test",
         #    env=cdk.Environment(account="536826985609", region="us-east-1")))
