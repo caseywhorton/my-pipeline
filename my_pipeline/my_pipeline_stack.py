@@ -34,9 +34,9 @@ class MyPipelineStack(cdk.Stack):
                                                     trigger=GitHubTrigger.WEBHOOK),
                                                 commands=["npm install -g aws-cdk",
                                                           "python -m pip install -r requirements.txt",
-                                                          "pytest",
+                                                          "python pytest",
                                                           "cdk synth"]
                                                 )
                                 )
-        pipeline.add_stage(MyPipelineAppStage(self, "test",
-            env=cdk.Environment(account="536826985609", region="us-east-1")))
+        #pipeline.add_stage(MyPipelineAppStage(self, "test",
+        #    env=cdk.Environment(account="536826985609", region="us-east-1")))
