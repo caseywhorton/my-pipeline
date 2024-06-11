@@ -34,6 +34,7 @@ class MyPipelineStack(cdk.Stack):
                                                     trigger=GitHubTrigger.WEBHOOK),
                                                 commands=["npm install -g aws-cdk",
                                                           "python -m pip install -r requirements.txt",
+                                                          "pytest",
                                                           "cdk synth"]
                                                 )
                                 )
