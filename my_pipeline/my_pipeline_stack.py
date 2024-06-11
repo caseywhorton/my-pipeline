@@ -38,6 +38,7 @@ class MyPipelineStack(cdk.Stack):
                                                           "python -m pip install -r requirements.txt",
                                                           "cdk synth"]
                                                 )
+                                
                                 )
         application = codedeploy.LambdaApplication(self, "CodeDeployApplication",
                                                    application_name="MyApplication"
