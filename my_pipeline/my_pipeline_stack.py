@@ -40,8 +40,8 @@ class MyPipelineStack(cdk.Stack):
                                                 )
                                 
                                 )
-        application = codedeploy.LambdaApplication(self, "CodeDeployApplication",
-                                                   application_name="MyApplication"
+        # application = codedeploy.LambdaApplication(self, "CodeDeployApplication",
+        #                                           application_name="MyApplication"
                                                    )
         # pipeline.add_stage(MyPipelineAppStage(self, "test",
         #    env=cdk.Environment(account="536826985609", region="us-east-1")))
