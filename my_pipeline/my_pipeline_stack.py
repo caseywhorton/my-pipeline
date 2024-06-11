@@ -17,6 +17,7 @@ from aws_cdk import (
 from constructs import Construct
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 from aws_cdk.aws_codepipeline_actions import GitHubTrigger
+from my_pipeline.my_pipeline_app_stage import MyPipelineAppStage
 
 
 class MyPipelineStack(cdk.Stack):
@@ -36,3 +37,5 @@ class MyPipelineStack(cdk.Stack):
                                                           "cdk synth"]
                                                 )
                                 )
+        pipeline.add_stage(MyPipelineAppStage(self, "test",
+            env=cdk.Environment(account="536826985609", region="us-east-1")))
